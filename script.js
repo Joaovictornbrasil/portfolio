@@ -28,7 +28,7 @@ const projetos = [
       "Apresentação de indicadores de performance (KPIs)"
     ],
     link: "#",
-    imagem: "assets/dashboard/dashboard.jpg"
+    imagem: "assets/dashboard/dashboard.png"
   },
   {
     titulo: "Automação de Relatórios",
@@ -53,7 +53,7 @@ const projetos = [
       "Capacidade de organização"
     ],
     link: "https://github.com/Andersonndiass/Somniphobia?tab=readme-ov-file",
-    imagem: "assets/somniphobia/init.png"
+    imagem: "assets/somniphobia/titulo.png"
   }
 ];
 
