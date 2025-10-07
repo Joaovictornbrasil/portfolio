@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Portfólio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="cabecalho">
+      <h1>João Victor</h1>
+
+      <div class="nav-direita">
+        <nav>
+          <ul>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+          </ul>
+        </nav>
+        <nav>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/joaovicnv/" target="_blank"><img src="assets/icons/linkedin.png" class="icon"></a>
+            </li>
+            <li><a href="https://www.instagram.com/joao.vicnv/" target="_blank"><img
+                  src="assets/icons/logotipo-do-instagram.png" class="icon"></a></li>
+          </ul>
+        </nav>
+
+        <!-- Botão de troca de tema -->
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+    </div>
+  </header>
+  <!-- ===== SOBRE ME ===== -->
+  <section id="sobre" class="section">
+    <div class="container">
+      <h2>Sobre Mim</h2>
+      <p>Sou Analista de Sistemas com experiência em análise de dados, desenvolvimento de soluções e
+        automação de processos. Gosto de transformar informações em decisões estratégicas e criar soluções
+        que facilitem o dia a dia das empresas.</p>
+    </div>
+  </section>
+  <!-- ===== SKILLS MINHAS ===== -->
+<section id="habilidades" class="section">
+  <div class="container">
+    <h2>Habilidades</h2>
+
+    <div class="skills-container">
+      <div class="skills-col">
+        <h3>Hard Skills</h3>
+        <div class="skills-grid">
+          <div class="skill"><img src="assets/icons/python.png" alt=""><p>Python</p></div>
+          <div class="skill"><img src="assets/icons/godot.png" alt=""><p>Godot</p></div>
+          <div class="skill"><img src="assets/icons/html.png" alt=""><p>HTML</p></div>
+          <div class="skill"><img src="assets/icons/css.png" alt=""><p>CSS</p></div>
+          <div class="skill"><img src="assets/icons/js.png" alt=""><p>JavaScript</p></div>
+        </div>
+      </div>
+
+      <div class="skills-col">
+        <h3>Soft Skills</h3>
+        <ul class="soft-skills-list">
+          <li>Comunicação</li>
+          <li>Resolução de problemas</li>
+          <li>Gestão de tempo</li>
+          <li>Aprendizado rápido</li>
+          <li>Organização e foco</li>
+          <li>Trabalho em equipe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- ===== CARDS ===== -->
+  <section id="projetos" class="section">
+    <div class="container">
+      <h2>Projetos</h2>
+      <div class="projetos-grid">
+        <div class="projeto-card">
+          <h3>Dashboard de Vendas</h3>
+          <p>Análise de vendas com gráficos interativos e indicadores-chave.</p>
+          <a href="#" target="_blank" class="btn">Ver Projeto</a>
+        </div>
+        <div class="projeto-card">
+          <h3>Automação de Relatórios</h3>
+          <p>Script em Python para gerar relatórios automáticos de performance.</p>
+          <a href="#" target="_blank" class="btn">Ver Projeto</a>
+        </div>
+        <div class="projeto-card">
+          <h3>Somniphobia</h3>
+          <p>Somniphobia é um jogo de simulação e terror em estilo low-poly, inspirado nos gráficos do PS1, onde você
+            controla um garoto preso em um pesadelo surreal dentro de sua escola distorcida. O objetivo é escapar desse
+            mundo corrompido para finalmente acordar.</p>
+          <a href="https://github.com/Andersonndiass/Somniphobia?tab=readme-ov-file" target="_blank" class="btn">Ver
+            Projeto</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===== MODAL ===== -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modal-titulo"></h3>
+      <img id="modal-imagem" src="" alt="Imagem do projeto" class="modal-imagem">
+      <p id="modal-descricao"></p>
+      <h4>Competências Desenvolvidas:</h4>
+      <ul id="modal-competencias"></ul>
+      <a id="modal-link" href="#" target="_blank" class="btn">Ver Projeto</a>
+    </div>
+
+  </div>
+  <footer>
+    <a href="mailto:seuemail@gmail.com" class="btn-contato">Contato</a>
+    <p>&copy; 2025 João Victor. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    // ----- Tema -----
+    if (localStorage.getItem("theme") === "dark") {
+      body.classList.add("dark-mode");
+      toggleBtn.checked = true;
+    }
+
+    toggleBtn.addEventListener("change", () => {
+      body.classList.toggle("dark-mode");
+      localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+    });
+
+    // ----- MODAL -----
+    const projetos = [
+      {
+        titulo: "Dashboard de Vendas",
+        descricao: "Análise de vendas com gráficos interativos e indicadores-chave.",
+        competencias: [
+          "Power BI e visualização de dados",
+          "SQL e modelagem de banco de dados",
+          "Apresentação de indicadores de performance (KPIs)"
+        ],
+        link: "#",
+        imagem: "assets/dashboard/dashboard.jpg"
+      },
+      {
+        titulo: "Automação de Relatórios",
+        descricao: "Script em Python para gerar relatórios automáticos de performance.",
+        competencias: [
+          "Python e bibliotecas pandas/openpyxl",
+          "Automação de processos",
+          "Manipulação de arquivos Excel"
+        ],
+        link: "#",
+        imagem: "assets/forgotten/relatorios.jpg"
+      },
+      {
+        titulo: "Somniphobia",
+        descricao: "Somniphobia é um jogo de simulação e terror low-poly inspirado nos gráficos do PS1...",
+        competencias: [
+          "Trabalho em equipe",
+          "Godot",
+          "GDScript",
+          "Github",
+          "Gestão de projetos",
+          "Capacidade de organização"
+        ],
+        link: "https://github.com/Andersonndiass/Somniphobia?tab=readme-ov-file",
+        imagem: "assets/somniphobia/init.png"
+      }
+    ];
+
+    const modal = document.getElementById("modal");
+    const modalTitulo = document.getElementById("modal-titulo");
+    const modalDescricao = document.getElementById("modal-descricao");
+    const modalCompetencias = document.getElementById("modal-competencias");
+    const modalLink = document.getElementById("modal-link");
+    const modalImagem = document.getElementById("modal-imagem");
+    const closeBtn = document.querySelector(".close");
+
+    // Abre modal ao clicar no botão
+    document.querySelectorAll(".projeto-card .btn").forEach((btn, index) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const p = projetos[index];
+        modalTitulo.textContent = p.titulo;
+        modalImagem.src = p.imagem;
+        modalDescricao.textContent = p.descricao;
+        modalCompetencias.innerHTML = p.competencias.map(c => `<li>${c}</li>`).join("");
+        modalLink.href = p.link;
+        modal.style.display = "block";
+      });
+    });
+
+    // Fecha modal
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (event) => {
+      if (event.target === modal) modal.style.display = "none";
+    };
+  </script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    ScrollReveal().reveal('.section', {
+      duration: 1000,
+      distance: '40px',
+      origin: 'bottom',
+      easing: 'ease-in-out',
+      reset: false
+    });
+  </script>
+</body>
+
+</html>
