@@ -15,7 +15,17 @@ toggleBtn.addEventListener("change", () => {
     "theme",
     body.classList.contains("dark-mode") ? "dark" : "light"
   );
+    // --- CÓDIGO NOVO ADICIONADO AQUI ---
+  // Atualiza as imagens dentro do modal, caso ele esteja aberto
+  const isNowDarkMode = body.classList.contains('dark-mode');
+  const imagesInModal = modal.querySelectorAll('.modal-imagem[data-light-src]');
+
+  imagesInModal.forEach(img => {
+    // Usa os data-attributes que adicionamos para trocar a imagem
+    img.src = isNowDarkMode ? img.dataset.darkSrc : img.dataset.lightSrc;
+  });
 });
+
 
 // ======= MODAL DE PROJETOS =======
 const projetos = [
@@ -28,7 +38,12 @@ const projetos = [
       "Apresentação de indicadores de performance (KPIs)"
     ],
     link: "#",
-    imagem: "assets/dashboard/dashboard.png"
+    // SOLUÇÃO: Usando "imagens" (plural) com uma lista de URLs simples.
+    // Nenhuma dessas vai mudar com o tema.
+    imagens: [
+      "assets/dashboard/dashboard.png",
+      "assets/dashboard/tabela.png"
+    ]
   },
   {
     titulo: "Automação de Relatórios",
@@ -39,25 +54,24 @@ const projetos = [
       "Manipulação de arquivos Excel"
     ],
     link: "#",
+    // SOLUÇÃO: Usando "imagem" (singular) com uma única URL.
+    // Também não vai mudar com o tema.
     imagem: "assets/forgotten/relatorios.jpg"
   },
   {
     titulo: "Somniphobia",
     descricao: "Somniphobia é um jogo de simulação e terror em estilo low-poly, inspirado nos gráficos do PS1, onde você controla um garoto preso em um pesadelo surreal dentro de sua escola distorcida. O objetivo é escapar desse mundo corrompido para finalmente acordar.",
     competencias: [
-      "Trabalho em equipe",
-      "Godot",
-      "GDScript",
-      "Github",
-      "Gestão de projetos",
-      "Capacidade de organização"
+      "Trabalho em equipe", "Godot", "GDScript", "Github", "Gestão de projetos", "Capacidade de organização"
     ],
     link: "https://github.com/Andersonndiass/Somniphobia?tab=readme-ov-file",
+    // SOLUÇÃO: Este é o ÚNICO que tem objetos {light, dark}.
+    // Apenas estas imagens vão trocar com o tema.
     imagens: [
-      "assets/somniphobia/titulo.png",
-      "assets/somniphobia/gameplay2.png",
-      "assets/somniphobia/gameplay.png",
-      "assets/somniphobia/init.png"
+      { light: "assets/somniphobia/titulo2.png", dark: "assets/somniphobia/titulo.png" },
+      { light: "assets/somniphobia/gameplay2.png", dark: "assets/somniphobia/gameplay2.png" },
+      { light: "assets/somniphobia/gameplay.png", dark: "assets/somniphobia/gameplay.png" },
+      { light: "assets/somniphobia/init.png", dark: "assets/somniphobia/init.png" }
     ]
   }
 ];
@@ -82,15 +96,31 @@ document.querySelectorAll(".projeto-card .btn").forEach((btn, index) => {
     modalCompetencias.innerHTML = p.competencias.map(c => `<li>${c}</li>`).join("");
     modalLink.href = p.link;
 
-    // === GALERIA ===
+    // === GALERIA (CÓDIGO MELHORADO) ===
+    modalGaleria.innerHTML = ""; // Limpa a galeria antes de adicionar novas imagens
+    const isDarkMode = document.body.classList.contains('dark-mode');
+
     if (p.imagens && p.imagens.length > 0) {
       modalGaleria.innerHTML = p.imagens
-        .map(img => `<img src="${img}" class="modal-imagem" alt="${p.titulo}">`)
+        .map(imgData => {
+          // Se imgData for um objeto (tem .light e .dark)
+          if (typeof imgData === 'object' && imgData.light && imgData.dark) {
+            const initialSrc = isDarkMode ? imgData.dark : imgData.light;
+            return `<img src="${initialSrc}" 
+                         class="modal-imagem" 
+                         alt="${p.titulo}"
+                         data-light-src="${imgData.light}"
+                         data-dark-src="${imgData.dark}">`;
+          }
+          // Se for apenas uma string (URL)
+          if (typeof imgData === 'string') {
+            return `<img src="${imgData}" class="modal-imagem" alt="${p.titulo}">`;
+          }
+          return ''; // Retorna string vazia para dados inválidos
+        })
         .join("");
-    } else if (p.imagem) {
+    } else if (p.imagem) { // Caso de imagem única (string)
       modalGaleria.innerHTML = `<img src="${p.imagem}" class="modal-imagem" alt="${p.titulo}">`;
-    } else {
-      modalGaleria.innerHTML = "";
     }
 
     modal.style.display = "block";
@@ -110,4 +140,38 @@ ScrollReveal().reveal(".section", {
   origin: "bottom",
   easing: "ease-in-out",
   reset: false
+});
+
+
+// ======= LIGHTBOX DA IMAGEM (VISUALIZADOR) =======
+const lightboxModal = document.getElementById('lightbox-modal');
+const lightboxImage = document.getElementById('lightbox-image');
+const lightboxClose = document.querySelector('.lightbox-close');
+
+// A "mágica" está aqui. Usamos "delegação de evento".
+// Como as imagens são criadas dinamicamente, colocamos o "escutador"
+// no pai (a galeria) e verificamos se o clique foi em uma imagem.
+modalGaleria.addEventListener('click', (e) => {
+  // Verifica se o elemento clicado tem a classe 'modal-imagem'
+  if (e.target.classList.contains('modal-imagem')) {
+    lightboxModal.style.display = 'block'; // Mostra o lightbox
+    lightboxImage.src = e.target.src;      // Coloca a imagem clicada dentro dele
+  }
+});
+
+// Função para fechar o lightbox
+function closeLightbox() {
+  lightboxModal.style.display = 'none';
+}
+
+// Eventos para fechar o lightbox:
+// 1. Clicando no botão 'X'
+lightboxClose.onclick = closeLightbox;
+
+// 2. Clicando no fundo escuro (fora da imagem)
+lightboxModal.addEventListener('click', (e) => {
+  // Se o clique foi no fundo (o próprio modal) e não na imagem
+  if (e.target === lightboxModal) {
+    closeLightbox();
+  }
 });

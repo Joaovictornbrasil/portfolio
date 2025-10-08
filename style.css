@@ -581,3 +581,65 @@ body.dark-mode .soft-skills-list li:hover {
   background: #3a86ff;
   color: #fff;
 }
+
+/* COLE ISSO NO FINAL DO SEU ARQUIVO STYLE.CSS */
+
+/* Dica visual para mostrar que a imagem é clicável */
+.modal-imagem {
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.modal-imagem:hover {
+    transform: scale(1.03);
+}
+
+
+/* ===== ESTILOS DO LIGHTBOX (VISUALIZADOR DE IMAGEM) ===== */
+.lightbox {
+  /* Fica escondido por padrão */
+  display: none;
+  position: fixed;
+  /* Fica por cima de tudo, até do modal de projeto */
+  z-index: 1000;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9); /* Fundo preto semi-transparente */
+  cursor: zoom-out; /* Dica visual para fechar */
+}
+
+/* A imagem dentro do lightbox */
+.lightbox-content {
+  margin: auto;
+  display: block;
+  max-width: 85%;
+  max-height: 85%;
+  /* Animação suave de zoom ao abrir */
+  animation-name: zoom;
+  animation-duration: 0.4s;
+}
+
+@keyframes zoom {
+  from {transform: scale(0.8)}
+  to {transform: scale(1)}
+}
+
+/* Botão de fechar (X) */
+.lightbox-close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.lightbox-close:hover {
+  color: #bbb;
+}
