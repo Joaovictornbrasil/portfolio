@@ -33,11 +33,14 @@ const projetos = [
     titulo: "Dashboard de Vendas",
     descricao: "Análise de vendas com gráficos interativos e indicadores-chave.",
     competencias: [
-      "Power BI e visualização de dados",
-      "SQL e modelagem de banco de dados",
-      "Apresentação de indicadores de performance (KPIs)"
+      "Power BI",
+      "Visualização de dados",
+      "Manipulação de dados",
+      "Análise de dados",
+      "Tratamento de dados",
+      "Limpeza de dados",
+      "Pensamento crítico"
     ],
-    link: "#",
     // SOLUÇÃO: Usando "imagens" (plural) com uma lista de URLs simples.
     // Nenhuma dessas vai mudar com o tema.
     imagens: [
@@ -85,48 +88,64 @@ const modalImagem = document.getElementById("modal-imagem");
 const closeBtn = document.querySelector(".close");
 const modalGaleria = document.getElementById("modal-galeria");
 
-// Abrir modal
-document.querySelectorAll(".projeto-card .btn").forEach((btn, index) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const p = projetos[index];
+// Função que abre o modal com os dados de um projeto específico
+function abrirModal(projeto) {
+  modalTitulo.textContent = projeto.titulo;
+  modalDescricao.textContent = projeto.descricao;
+  modalCompetencias.innerHTML = projeto.competencias.map(c => `<li>${c}</li>`).join("");
+  
+  // Se o projeto não tiver um link, esconde o botão do modal
+  if (projeto.link && projeto.link !== "#") {
+      modalLink.href = projeto.link;
+      modalLink.style.display = "inline-block";
+  } else {
+      modalLink.style.display = "none";
+  }
 
-    modalTitulo.textContent = p.titulo;
-    modalDescricao.textContent = p.descricao;
-    modalCompetencias.innerHTML = p.competencias.map(c => `<li>${c}</li>`).join("");
-    modalLink.href = p.link;
+  // Lógica da galeria (continua a mesma que fizemos antes)
+  modalGaleria.innerHTML = ""; 
+  const isDarkMode = document.body.classList.contains('dark-mode');
 
-    // === GALERIA (CÓDIGO MELHORADO) ===
-    modalGaleria.innerHTML = ""; // Limpa a galeria antes de adicionar novas imagens
-    const isDarkMode = document.body.classList.contains('dark-mode');
+  if (projeto.imagens && projeto.imagens.length > 0) {
+    modalGaleria.innerHTML = projeto.imagens
+      .map(imgData => {
+        if (typeof imgData === 'object' && imgData.light && imgData.dark) {
+          const initialSrc = isDarkMode ? imgData.dark : imgData.light;
+          return `<img src="${initialSrc}" class="modal-imagem" alt="${projeto.titulo}" data-light-src="${imgData.light}" data-dark-src="${imgData.dark}">`;
+        }
+        if (typeof imgData === 'string') {
+          return `<img src="${imgData}" class="modal-imagem" alt="${projeto.titulo}">`;
+        }
+        return '';
+      })
+      .join("");
+  } else if (projeto.imagem) {
+    modalGaleria.innerHTML = `<img src="${projeto.imagem}" class="modal-imagem" alt="${projeto.titulo}">`;
+  }
 
-    if (p.imagens && p.imagens.length > 0) {
-      modalGaleria.innerHTML = p.imagens
-        .map(imgData => {
-          // Se imgData for um objeto (tem .light e .dark)
-          if (typeof imgData === 'object' && imgData.light && imgData.dark) {
-            const initialSrc = isDarkMode ? imgData.dark : imgData.light;
-            return `<img src="${initialSrc}" 
-                         class="modal-imagem" 
-                         alt="${p.titulo}"
-                         data-light-src="${imgData.light}"
-                         data-dark-src="${imgData.dark}">`;
-          }
-          // Se for apenas uma string (URL)
-          if (typeof imgData === 'string') {
-            return `<img src="${imgData}" class="modal-imagem" alt="${p.titulo}">`;
-          }
-          return ''; // Retorna string vazia para dados inválidos
-        })
-        .join("");
-    } else if (p.imagem) { // Caso de imagem única (string)
-      modalGaleria.innerHTML = `<img src="${p.imagem}" class="modal-imagem" alt="${p.titulo}">`;
-    }
+  modal.style.display = "block";
+}
 
-    modal.style.display = "block";
-  });
+// Adiciona os eventos de clique
+document.querySelectorAll(".projeto-card").forEach((card, index) => {
+  const p = projetos[index];
+  
+  // Tenta encontrar um botão dentro do card
+  const btn = card.querySelector(".btn");
+
+  if (btn) {
+    // Se encontrou um botão, o evento de clique vai para o botão
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirModal(p);
+    });
+  } else if (card.classList.contains("modal-trigger")) {
+    // Se não tem botão, mas tem a classe 'modal-trigger', o card inteiro fica clicável
+    card.addEventListener("click", () => {
+      abrirModal(p);
+    });
+  }
 });
-
 // Fechar modal
 closeBtn.onclick = () => modal.style.display = "none";
 window.onclick = (event) => {
