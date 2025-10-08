@@ -448,6 +448,39 @@ body.dark-mode .modal-imagem {
   box-shadow: 0 2px 8px rgba(255,255,255,0.1);
 }
 
+.modal-galeria {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin-bottom: 15px;
+}
+
+.modal-galeria::-webkit-scrollbar {
+  height: 8px;
+}
+
+.modal-galeria::-webkit-scrollbar-thumb {
+  background: #3a86ff;
+  border-radius: 4px;
+}
+
+.modal-imagem {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+#modal-descricao {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  display: block;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
 
 .btn-contato {
     position: fixed;

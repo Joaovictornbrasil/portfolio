@@ -43,7 +43,7 @@ const projetos = [
   },
   {
     titulo: "Somniphobia",
-    descricao: "Somniphobia é um jogo de simulação e terror low-poly inspirado nos gráficos do PS1...",
+    descricao: "Somniphobia é um jogo de simulação e terror em estilo low-poly, inspirado nos gráficos do PS1, onde você controla um garoto preso em um pesadelo surreal dentro de sua escola distorcida. O objetivo é escapar desse mundo corrompido para finalmente acordar.",
     competencias: [
       "Trabalho em equipe",
       "Godot",
@@ -53,7 +53,12 @@ const projetos = [
       "Capacidade de organização"
     ],
     link: "https://github.com/Andersonndiass/Somniphobia?tab=readme-ov-file",
-    imagem: "assets/somniphobia/titulo.png"
+    imagens: [
+      "assets/somniphobia/titulo.png",
+      "assets/somniphobia/gameplay2.png",
+      "assets/somniphobia/gameplay.png",
+      "assets/somniphobia/init.png"
+    ]
   }
 ];
 
@@ -64,17 +69,30 @@ const modalCompetencias = document.getElementById("modal-competencias");
 const modalLink = document.getElementById("modal-link");
 const modalImagem = document.getElementById("modal-imagem");
 const closeBtn = document.querySelector(".close");
+const modalGaleria = document.getElementById("modal-galeria");
 
 // Abrir modal
 document.querySelectorAll(".projeto-card .btn").forEach((btn, index) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
     const p = projetos[index];
+
     modalTitulo.textContent = p.titulo;
-    modalImagem.src = p.imagem;
     modalDescricao.textContent = p.descricao;
     modalCompetencias.innerHTML = p.competencias.map(c => `<li>${c}</li>`).join("");
     modalLink.href = p.link;
+
+    // === GALERIA ===
+    if (p.imagens && p.imagens.length > 0) {
+      modalGaleria.innerHTML = p.imagens
+        .map(img => `<img src="${img}" class="modal-imagem" alt="${p.titulo}">`)
+        .join("");
+    } else if (p.imagem) {
+      modalGaleria.innerHTML = `<img src="${p.imagem}" class="modal-imagem" alt="${p.titulo}">`;
+    } else {
+      modalGaleria.innerHTML = "";
+    }
+
     modal.style.display = "block";
   });
 });
