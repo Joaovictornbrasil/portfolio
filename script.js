@@ -49,12 +49,11 @@ const projetos = [
     ]
   },
   {
-    titulo: "Automação de Relatórios",
-    descricao: "Script em Python para gerar relatórios automáticos de performance.",
+    titulo: "Forgotten",
+    descricao: "Nesta realidade, a humanidade avançada enfrenta uma epidemia que degenera lentamente o corpo e força crianças a nascerem prematuras. Para salvar a população, os doentes são isolados em cápsulas de contenção enquanto os Kammerjäger, operadores de elite, enviam seus avatares por nanobots para combater a infecção de dentro do sistema imune. O objetivo é purificar o organismo para a extração segura do CPH4 dos recém-nascidos, um composto essencial usado para curar os adultos. Contudo, a tecnologia das cápsulas foi adaptada para um uso secundário e perigoso: reviver as memórias mais felizes de uma pessoa. Esta experiência, embora reconfortante, tem um custo terrível, drenando a vitalidade do usuário a cada sessão. A máquina, altamente viciante, transforma o alívio em uma lenta sentença de morte. Nosso protagonista, um morador do grande centro comercial de Treggërba, vive o luto pela perda trágica de sua família. Desolado e em busca de qualquer alívio, ele se vê perigosamente atraído pela promessa da cápsula de memórias, um refúgio que pode custar sua própria vida.",
     competencias: [
-      "Python e bibliotecas pandas/openpyxl",
-      "Automação de processos",
-      "Manipulação de arquivos Excel"
+      "Trabalho em equipe",
+      "Roteirização",
     ],
     link: "#",
     // SOLUÇÃO: Usando "imagem" (singular) com uma única URL.
@@ -193,4 +192,22 @@ lightboxModal.addEventListener('click', (e) => {
   if (e.target === lightboxModal) {
     closeLightbox();
   }
+});
+
+// ======= FUNCIONALIDADE VER MAIS / VER MENOS =======
+document.querySelectorAll('.see-more-btn').forEach(button => {
+  button.addEventListener('click', event => {
+    // Encontra o card pai mais próximo do botão clicado
+    const card = event.target.closest('.projeto-card');
+    
+    // Adiciona ou remove a classe 'expanded' no card
+    card.classList.toggle('expanded');
+    
+    // Muda o texto do botão com base na presença da classe 'expanded'
+    if (card.classList.contains('expanded')) {
+      event.target.textContent = 'Ver menos';
+    } else {
+      event.target.textContent = 'Ver mais';
+    }
+  });
 });

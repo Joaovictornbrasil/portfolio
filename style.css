@@ -643,3 +643,53 @@ body.dark-mode .soft-skills-list li:hover {
 .lightbox-close:hover {
   color: #bbb;
 }
+
+/* --- EFEITO VER MAIS / VER MENOS --- */
+
+.projeto-card .expandable-text {
+  /* Define a altura máxima inicial (ajuste conforme necessário) */
+  max-height: 95px; 
+  overflow: hidden;
+  position: relative;
+  /* Transição suave para a altura ao expandir/recolher */
+  transition: max-height 0.4s ease-in-out;
+}
+
+/* Efeito de gradiente no final do texto para indicar que há mais conteúdo */
+.projeto-card .expandable-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, #1f1f1f); /* Use a cor de fundo do seu card */
+  pointer-events: none; /* Garante que não atrapalhe a seleção de texto */
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Estilo para o estado expandido */
+.projeto-card.expanded .expandable-text {
+  /* Altura grande o suficiente para mostrar todo o texto */
+  max-height: 500px; 
+}
+
+/* Esconde o gradiente quando o texto estiver expandido */
+.projeto-card.expanded .expandable-text::after {
+  opacity: 0;
+}
+
+
+/* Estilo para o botão "Ver mais" */
+.see-more-btn {
+  display: inline-block;
+  margin-top: 10px;
+  color: #3a86ff; /* Mesma cor do seu botão principal */
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.see-more-btn:hover {
+  color: #5d9dff;
+}
