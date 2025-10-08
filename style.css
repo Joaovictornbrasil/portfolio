@@ -157,6 +157,12 @@ h2 {
 }
 
 /* ======= PROJETOS ======= */
+#projetos {
+    /* Adiciona espaço extra no final para que o último 
+       card não fique escondido atrás do botão de contato */
+    padding-bottom: 120px; 
+}
+
 .projetos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
