@@ -515,6 +515,8 @@ body.dark-mode .modal-imagem {
 }
 .skill img {
   width: 60px;
+  height: 60px;
+  /*object-fit: contain; mantém proporção sem distorcer */
   transition: transform 0.3s;
 }
 .skill:hover img {
@@ -647,15 +649,13 @@ body.dark-mode .soft-skills-list li:hover {
 /* --- EFEITO VER MAIS / VER MENOS --- */
 
 .projeto-card .expandable-text {
-  /* Define a altura máxima inicial (ajuste conforme necessário) */
   max-height: 95px; 
   overflow: hidden;
   position: relative;
-  /* Transição suave para a altura ao expandir/recolher */
   transition: max-height 0.4s ease-in-out;
 }
 
-/* Efeito de gradiente no final do texto para indicar que há mais conteúdo */
+/* Gradiente para o MODO CLARO (fundo do card é #ffffff) */
 .projeto-card .expandable-text::after {
   content: '';
   position: absolute;
@@ -663,14 +663,18 @@ body.dark-mode .soft-skills-list li:hover {
   left: 0;
   width: 100%;
   height: 40px;
-  background: linear-gradient(to bottom, transparent, #1f1f1f); /* Use a cor de fundo do seu card */
-  pointer-events: none; /* Garante que não atrapalhe a seleção de texto */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff); /* Alterado para branco */
+  pointer-events: none;
   transition: opacity 0.4s ease-in-out;
+}
+
+/* Gradiente para o MODO ESCURO (fundo do card é #1f1f1f) */
+body.dark-mode .projeto-card .expandable-text::after {
+    background: linear-gradient(to bottom, rgba(31, 31, 31, 0), #1f1f1f); /* Mantém o cinza escuro */
 }
 
 /* Estilo para o estado expandido */
 .projeto-card.expanded .expandable-text {
-  /* Altura grande o suficiente para mostrar todo o texto */
   max-height: 500px; 
 }
 
@@ -679,12 +683,11 @@ body.dark-mode .soft-skills-list li:hover {
   opacity: 0;
 }
 
-
 /* Estilo para o botão "Ver mais" */
 .see-more-btn {
   display: inline-block;
   margin-top: 10px;
-  color: #3a86ff; /* Mesma cor do seu botão principal */
+  color: #3a86ff;
   font-weight: 600;
   cursor: pointer;
   transition: color 0.3s;
